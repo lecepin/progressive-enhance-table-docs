@@ -48,7 +48,7 @@ export default () => {
 ```jsx
 /**
  * title: 自动宽度
- * description: 使用 `autoWidth:true`，所以单元格自动分配屏幕宽度，实际内容宽度小于屏幕宽度时，会沾满屏幕宽度。此模式下不会出现水平滚动条。
+ * description: 使用 `autoWidth:true`，所有单元格自动分配屏幕宽度，实际内容宽度小于屏幕宽度时，会沾满屏幕宽度。此模式下不会出现水平滚动条。
  */
 import React from 'react';
 import PETable from 'pe-table';

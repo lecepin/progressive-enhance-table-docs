@@ -5,7 +5,7 @@ export default defineConfig({
     name: 'PE-Table',
   },
   logo: '/progressive-enhance-table-docs/logo.png',
-  favicons: ['/logo.png'],
+  favicons: ['/progressive-enhance-table-docs/logo.png'],
   base: '/progressive-enhance-table-docs/',
   publicPath: '/progressive-enhance-table-docs/',
 });
