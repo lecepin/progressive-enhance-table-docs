@@ -4,7 +4,9 @@ nav:
   order: 0
 ---
 
-<center><img src="/progressive-enhance-table-docs/intro.png" /></center>
+<a href="https://www.npmjs.com/package/pe-table"><img src="https://badgen.net/npm/v/pe-table" alt="Version" /></a>
+
+<img src="/progressive-enhance-table-docs/intro.png" />
 
 ## 安装
 
