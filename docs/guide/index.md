@@ -4,7 +4,7 @@ nav:
   order: 0
 ---
 
-<center><img src="/intro.png" /></center>
+<center><img src="/progressive-enhance-table-docs/intro.png" /></center>
 
 ## 安装
 
