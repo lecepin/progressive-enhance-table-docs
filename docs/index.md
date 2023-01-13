@@ -5,6 +5,8 @@ hero:
   actions:
     - text: 快速开始
       link: /guide
+    - text: Github
+      link: https://github.com/lecepin/progressive-enhance-table
 ---
 
 ```bash

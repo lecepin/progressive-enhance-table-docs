@@ -1,5 +1,8 @@
 ---
 title: 常规
+order: 0
+nav:
+  title: 示例
 ---
 
 ```jsx
