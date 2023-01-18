@@ -3,6 +3,9 @@ title: 实例方法
 order: 3
 nav:
   title: 示例
+group:
+  title: 基础
+  order: 0
 ---
 
 ### 方法列表
@@ -12,7 +15,7 @@ nav:
 ```jsx
 /**
  * title: 滚动到指定行
- * description: 使用 `scrollToViewByPrimaryKey` 实现。需要提供 `primaryKey`。未设置 `primaryKey` 的情况，`dataSource` 将读取 `id`。
+ * description: 使用 `scrollToViewByPrimaryKey` 实现。需要提供 `primaryKey`。未设置 `primaryKey` 的情况，`dataSource` 将读取 `id`。支持虚拟化场景。
  */
 import React from 'react';
 import PETable from 'pe-table';
@@ -51,7 +54,7 @@ export default () => {
           });
         }}
       >
-        查找 赵六8
+        定位 赵六8
       </button>
       <br />
       <br />

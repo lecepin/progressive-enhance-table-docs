@@ -3,6 +3,9 @@ title: 常规
 order: 0
 nav:
   title: 示例
+group:
+  title: 基础
+  order: 0
 ---
 
 ```jsx
@@ -562,6 +565,54 @@ export default () => {
 
 ```jsx
 /**
+ * title: 合并单元格粘住显示
+ * description: 使用 `mergedCellsStick:true` 实现。当合并单元格 `rowSpan` 超过一屏的时候，默认只能滚动到中间位置才能看到内容，其它位置都是空白。此属性可以保持在合并的范围内，都可见。
+ */
+import React from 'react';
+import PETable from 'pe-table';
+
+export default () => {
+  const columns = [...new Array(5)].map((item, index, arr) => ({
+    dataIndex: '' + (index + 1),
+    title: '列' + (index + 1),
+    width: 100,
+    align: 'center',
+    alignHeader: 'center',
+  }));
+
+  const dataSource = [...new Array(20)].map((item, rindex) => {
+    const rowData = { id: rindex };
+    const h = Math.random() * 80 + 40;
+    columns.map((item, colindex) => {
+      rowData[item.dataIndex] = `${rindex + 1}行${colindex + 1}列`;
+    });
+
+    return rowData;
+  });
+
+  return (
+    <PETable
+      columns={columns}
+      dataSource={dataSource}
+      cellProps={(rowIndex, colIndex, dataIndex, record) => {
+        if (record['2'] == '1行2列' && dataIndex == '2') {
+          return { rowSpan: dataSource.length };
+        }
+
+        if (record['3'] == '2行3列' && dataIndex == '3') {
+          return { colSpan: 2, rowSpan: 2 };
+        }
+      }}
+      autoWidth
+      maxHeight={250}
+      mergedCellsStick
+    />
+  );
+};
+```
+
+```jsx
+/**
  * title: 列宽调整
  * description: 通过在 `columns` 中的项目设置为 `resizable:true`，开启可拖动调整列宽的能力，设置 `minWidth` 可以用来限定最小宽度。在 `onResizeChange` 回调中接受调整后的宽度信息，自行同步到 `columns` 中即可生效。注意 必须关闭 `autoWidth`，否则无法水平滚动。
  */
@@ -734,7 +785,6 @@ export default () => {
         resetScrollbarPosition={isReset}
         columns={columns}
         dataSource={dataSource}
-        rowHeight={50}
         maxHeight={250}
       />
     </>

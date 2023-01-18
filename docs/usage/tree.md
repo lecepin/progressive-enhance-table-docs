@@ -3,6 +3,9 @@ title: 树表格
 order: 1
 nav:
   title: 示例
+group:
+  title: 基础
+  order: 0
 ---
 
 设置 `isTree:true` 启动树表格。
