@@ -1,20 +1,14 @@
-# pe-table
+# Progressive Enhance Table
 
-A static site base on [dumi](https://d.umijs.org).
+📖 [工具文档网站](https://lecepin.github.io/progressive-enhance-table-docs)
 
-## Development
+![image](https://user-images.githubusercontent.com/11046969/206654460-5cf55b6a-0155-49cd-8376-775a47d60700.png)
 
-```bash
-# install dependencies
-$ cnpm install
 
-# start dev server
-$ cnpm start
 
-# build docs
-$ cnpm run build
+#### install
+
+```
+npm i -S pe-table
 ```
 
-## LICENSE
-
-MIT
