@@ -11,6 +11,8 @@ group:
 ### 方法列表
 
 - scrollToViewByPrimaryKey: `(primaryKey: string, callback: (el: HTMLElement | null) => void)`
+- delRow: `(primaryId: string) => void`
+- getDataSource: `() => dataSource`
 
 ```jsx
 /**

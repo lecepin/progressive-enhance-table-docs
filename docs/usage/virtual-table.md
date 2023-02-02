@@ -71,7 +71,7 @@ export default () => {
     alignHeader: 'center',
   }));
 
-  const dataSource = [...new Array(1000)].map((item, rindex) => {
+  const dataSource = [...new Array(80)].map((item, rindex) => {
     const rowData = { id: rindex };
     const h = Math.random() * 80 + 40;
 
@@ -90,7 +90,8 @@ export default () => {
 
   return (
     <div>
-      此示例为 1000列 * 15行 = 1.5万个单元格。
+      此示例为 80列 *
+      15行，可以看到在滚动过程中，由于修正高度导致的滚动条的高度变化。
       <br />
       <br />
       <PETable
@@ -199,9 +200,130 @@ export default () => {
 };
 ```
 
-todos：
+:::warning{title=TODO}
+在不定高场景下，定位到最后一屏的行时，目前会由于高度修正逻辑，导致无法显示出定位的元素。
+:::
 
-> 动态高度下的，修改 ds 操作，如删除，异步展开，定位等。
+```jsx
+/**
+ * title: 合并单元格效果
+ * description: 同 `cellProps` 中的配置。<br /> 以上是虚拟表格场景下合并单元格超过表格高度的效果。
+ */
+import React from 'react';
+import PETable from 'pe-table';
 
-- 合并单元格
-- 动态高度下 删除某一行 且位置不变
+export default () => {
+  const columns = [...new Array(15)].map((item, index) => ({
+    dataIndex: '' + (index + 1),
+    title: '列' + (index + 1),
+    width: 100,
+    align: 'center',
+    alignHeader: 'center',
+  }));
+
+  const dataSource = [...new Array(1000)].map((item, rindex) => {
+    const rowData = { id: rindex };
+
+    columns.map((item, colindex) => {
+      rowData[item.dataIndex] = `${rindex + 1}行${colindex + 1}列`;
+    });
+
+    return rowData;
+  });
+
+  return (
+    <div>
+      此示例为 1000列 * 15行 = 1.5万个单元格。
+      <br />
+      <br />
+      <PETable
+        round
+        dataSource={dataSource}
+        columns={columns}
+        maxHeight={500}
+        useVirtual
+        mergedCellsStick
+        cellProps={(rowIndex, colIndex, dataIndex, record) => {
+          if (record['2'] == '1行2列' && dataIndex == '2') {
+            return { rowSpan: 20 };
+          }
+
+          if (record['3'] == '2行3列' && dataIndex == '3') {
+            return { colSpan: 2, rowSpan: 2 };
+          }
+        }}
+      />
+    </div>
+  );
+};
+```
+
+```jsx
+/**
+ * title: 删除行
+ * description: 需要调用实例方法 `ref.delRow(primaryKey)` 实现。
+ */
+import React from 'react';
+import PETable from 'pe-table';
+
+export default () => {
+  const ref = React.useRef();
+
+  const columns = [...new Array(15)].map((item, index) => ({
+    dataIndex: '' + (index + 1),
+    title: '列' + (index + 1),
+    width: 100,
+    align: 'center',
+    alignHeader: 'center',
+  }));
+
+  const dataSource = [...new Array(80)].map((item, rindex) => {
+    const rowData = { id: rindex };
+    const h = Math.random() * 80 + 40;
+
+    columns.map((item, colindex) => {
+      rowData[item.dataIndex] = (
+        <div
+          style={{
+            height: h,
+          }}
+        >
+          {colindex === 0 ? (
+            <div>
+              <button
+                onClick={() => {
+                  ref.current.delRow(rowData.id);
+                }}
+              >
+                删除行
+              </button>
+            </div>
+          ) : null}
+          {`${rindex + 1}行${colindex + 1}列`}
+        </div>
+      );
+    });
+
+    return rowData;
+  });
+
+  return (
+    <div>
+      <PETable
+        ref={ref}
+        round
+        dataSource={dataSource}
+        columns={columns}
+        maxHeight={500}
+        useVirtual
+      />
+    </div>
+  );
+};
+```
+
+:::warning
+做删除操作时，请不要直接对 `dataSource` 进行修改，会导致表格的滚动条重置到顶端，或者 高度偏移 等问题。
+请调用实例方法 `delRow` 来实现。
+获取内部 dataSource 请使用实例方法 `getDataSource` 来实现。
+:::
