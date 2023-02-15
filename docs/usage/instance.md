@@ -13,6 +13,8 @@ group:
 - scrollToViewByPrimaryKey: `(primaryKey: string, callback: (el: HTMLElement | null) => void)`
 - delRow: `(primaryId: string) => void`
 - getDataSource: `() => dataSource`
+- modifyRow<Badge type="warning">仅虚拟化下的 tree 模式下生效</Badge>: `(primaryId: string, callback?: (data: any) => any, forceRender = true) `
+- getOpenRowKeys: `() => openRowKeys`
 
 ```jsx
 /**

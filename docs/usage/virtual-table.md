@@ -10,6 +10,12 @@ group:
 
 通过 `useVirtual:true` 开启虚拟滚动。支持动态行高。
 
+:::warning
+做删除操作时，请不要直接对 `dataSource` 进行修改，会导致表格的滚动条重置到顶端，或者 高度偏移 等问题。
+请调用实例方法 `delRow` 来实现。
+获取内部 dataSource 请使用实例方法 `getDataSource` 来实现。
+:::
+
 ```jsx
 /**
  * title: 固定行高
@@ -321,9 +327,3 @@ export default () => {
   );
 };
 ```
-
-:::warning
-做删除操作时，请不要直接对 `dataSource` 进行修改，会导致表格的滚动条重置到顶端，或者 高度偏移 等问题。
-请调用实例方法 `delRow` 来实现。
-获取内部 dataSource 请使用实例方法 `getDataSource` 来实现。
-:::
