@@ -457,12 +457,13 @@ export default () => {
 ```jsx
 /**
  * title: 异步追加数据
- * description: 异步展开节点的时候，进行数据的追加处理。
+ * description: 调用实例方法 `appendRowChildren` 进行数据追加处理。
  */
 import React from 'react';
 import PETable from 'pe-table';
 
 export default () => {
+  const ref = React.useRef();
   const columns = [...new Array(15)].map((item, index) => ({
     dataIndex: '' + (index + 1),
     title: '列' + (index + 1),
@@ -471,7 +472,7 @@ export default () => {
     alignHeader: 'center',
   }));
 
-  const dig = (path = '0', level = 3) => {
+  const dig = (path = '0') => {
     const list = [];
     for (var i = 0; i < 15; i += 1) {
       const id = `${path}-${i}`;
@@ -484,11 +485,7 @@ export default () => {
         treeNode[dataIndex] = id + '-' + dataIndex + '列';
       });
 
-      if (level > 0) {
-        treeNode.children = dig(id, level - 1);
-      } else {
-        treeNode.isLeaf = true;
-      }
+      treeNode.children = [];
 
       list.push(treeNode);
     }
@@ -504,12 +501,25 @@ export default () => {
       <br />
       <br />
       <PETable
+        ref={ref}
         round
         dataSource={treeData}
         columns={columns}
         maxHeight={500}
         isTree
         useVirtual
+        loadData={(record) => {
+          console.log({ record });
+          console.log('load data...');
+          return new Promise((resolve, rej) => {
+            setTimeout(() => {
+              ref.current.appendRowChildren(record.id, (data) => {
+                return dig(record.id);
+              });
+              resolve();
+            }, 1000 + 2000 * Math.random());
+          });
+        }}
       />
     </div>
   );
