@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "pe-table": "^0.1.4-beta.0",
+    "pe-table": "^0.1.6",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
