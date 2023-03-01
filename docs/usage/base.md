@@ -837,7 +837,7 @@ export default () => {
 ```jsx
 /**
  * title: 表头自定义插槽
- * description: 可使用 `headerCustomRender` 属性填充 JSX，在表头区域进行渲染。
+ * description: 可使用 `headerCustomRender` 属性填充 JSX，在表头区域进行渲染。<br />容器最外层，可以在 `ContainerCustomRender` 填充 JSX。
  */
 import React from 'react';
 import PETable from 'pe-table';
