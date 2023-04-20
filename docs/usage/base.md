@@ -907,3 +907,77 @@ export default () => {
   );
 };
 ```
+
+```jsx
+/**
+ * title: 行拖动排序
+ * description: 通过 `canDragRow:true` 开启拖动行模式，可在 `dataSource` 中的 `isCanDrag:false` 来关闭当行行的拖动行为。<br /> - `onDragRowIsAvailable(drag, drop)` 方法交由用户处理当前位置是否可以被拖入。<br /> - `onDragRowEnd(drag, drop, pos)` 用来结束拖入的回掉。
+ */
+import React from 'react';
+import PETable from 'pe-table';
+
+export default () => {
+  const [ds, setDs] = React.useState([
+    { id: 1, name: '张三', sex: '男', age: '18' },
+    { id: 2, name: '李四', sex: '女', age: '28' },
+    { id: 3, name: '王五', sex: '女', age: '48' },
+    { id: 4, name: '赵六', sex: '男', age: '8', isCanDrag: false },
+  ]);
+
+  return (
+    <PETable
+      columns={[
+        {
+          dataIndex: 'name',
+          title: '姓名',
+          alignHeader: 'center',
+          width: 100,
+        },
+        {
+          dataIndex: 'sex',
+          title: '性别',
+          width: 100,
+          align: 'center',
+        },
+        {
+          dataIndex: 'age',
+          title: '年龄',
+          width: 100,
+        },
+      ]}
+      dataSource={ds}
+      canDragRow
+      onDragRowIsAvailable={(drag, drop) => {
+        return true;
+      }}
+      onDragRowEnd={(drag, drop, pos) => {
+        function loopInsert(nodes, dragNode, dropNode, pos) {
+          if (!Array.isArray(nodes)) {
+            return;
+          }
+          for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].id == dropNode.id) {
+              nodes.splice(pos == 'top' ? i : i + 1, 0, dragNode);
+              return true;
+            }
+          }
+        }
+        function loopDel(nodes, dragNode) {
+          if (!Array.isArray(nodes)) {
+            return;
+          }
+          for (let i = 0; i < nodes.length; i++) {
+            if (nodes[i].id == dragNode.id) {
+              nodes.splice(i, 1);
+              return true;
+            }
+          }
+        }
+        loopDel(ds, drag);
+        loopInsert(ds, drag, drop, pos);
+        setDs([...ds]);
+      }}
+    />
+  );
+};
+```
